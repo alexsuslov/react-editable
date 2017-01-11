@@ -1,10 +1,8 @@
 import React from 'react';
-import { observable } from "mobx";
-import { observer } from "mobx-react";
 
-@observer class Input extends React.Component {
-
+class Input extends React.Component {
   static propTypes = {
+    onChange: React.PropTypes.func,
     name: React.PropTypes.string,
     type: React.PropTypes.string,
 
@@ -21,11 +19,13 @@ import { observer } from "mobx-react";
     });
   }
 
-  @observable edited = false;
+  state = {
+    edited: false
+  };
 
   handleClick(e) {
     e.preventDefault();
-    this.edited = !this.edited;
+    this.setState({ edited: !this.state.edited});
   }
 
   handleKeyDown(e) {
@@ -33,34 +33,35 @@ import { observer } from "mobx-react";
       if(this.props.onChange){
         this.props.onChange(e);
       }
-      this.edited = false;
+      this.setState({ edited: false});
     }
   }
 
   handleBlur(e){
-    setTimeout(() => { this.edited = false }, 100);
+    setTimeout(() => { this.setState({ edited: false}); }, 200);
+  }
+  componentDidMount(){
+    this.width = this.refs.span.offsetWidth;
+    this.height = this.refs.span.offsetHeight;
   }
 
   render() {
     const { name, type, value } = this.props;
     const _input = {
-      name, type, 
+      name, type,
       defaultValue: value,
       onKeyDown: this.handleKeyDown,
       onBlur: this.handleBlur,
       style: {
-        display: 'flex',
-        width: '100%',
+        width: this.width,
+        height: this.height,
       }
     };
-    return this.edited
-    ? (<input autoFocus {..._input} />
-    : (
-      <span
-        style={_input.style}
-        onDblClick={this.handleClick}>{value}</span>
-    );
+    return this.state.edited
+    ? (<input autoFocus {..._input} />)
+    : (<span ref="span"
+        onDoubleClick={this.handleClick}>{value}</span>);
   }
 }
 
-export default observer(Input);
+export default Input;
