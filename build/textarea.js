@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _input2 = require('./input');
+
+var _input3 = _interopRequireDefault(_input2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20,56 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Input = function (_React$Component) {
-  _inherits(Input, _React$Component);
+var TextArea = function (_Input) {
+  _inherits(TextArea, _Input);
 
-  function Input(props) {
-    _classCallCheck(this, Input);
+  function TextArea() {
+    _classCallCheck(this, TextArea);
 
-    var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
-
-    _this.state = {
-      edited: false
-    };
-
-    ['KeyDown', 'Click', 'Blur'].forEach(function (v) {
-      _this['handle' + v] = _this['handle' + v].bind(_this);
-    });
-    return _this;
+    return _possibleConstructorReturn(this, (TextArea.__proto__ || Object.getPrototypeOf(TextArea)).apply(this, arguments));
   }
 
-  _createClass(Input, [{
-    key: 'handleClick',
-    value: function handleClick(e) {
-      e.preventDefault();
-      this.setState({ edited: !this.state.edited });
-    }
-  }, {
-    key: 'handleKeyDown',
-    value: function handleKeyDown(e) {
-      if (e.keyCode === 13) {
-        if (this.props.onChange) {
-          this.props.onChange(e);
-        }
-        this.setState({ edited: false });
-      }
-    }
-  }, {
-    key: 'handleBlur',
-    value: function handleBlur(e) {
-      var _this2 = this;
-
-      setTimeout(function () {
-        _this2.setState({ edited: false });
-      }, 200);
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.width = this.refs.span.offsetWidth;
-      this.height = this.refs.span.offsetHeight;
-    }
-  }, {
+  _createClass(TextArea, [{
     key: 'render',
     value: function render() {
       var _props = this.props,
@@ -77,19 +41,18 @@ var Input = function (_React$Component) {
           type = _props.type,
           value = _props.value;
 
-      var dx = type === 'number' ? 16 : 8;
-      var _input = this.state.edited ? {
+      var _input = {
         name: name, type: type,
         defaultValue: value,
         onKeyDown: this.handleKeyDown,
         onBlur: this.handleBlur,
         style: {
-          width: this.width + dx,
-          height: this.height + 8
+          width: this.width,
+          height: this.height
         }
-      } : {};
-      return this.state.edited ? _react2.default.createElement('input', _extends({ autoFocus: true }, _input)) : _react2.default.createElement(
-        'span',
+      };
+      return this.state.edited ? _react2.default.createElement('textarea', _extends({ autoFocus: true }, _input)) : _react2.default.createElement(
+        'p',
         { ref: 'span',
           onDoubleClick: this.handleClick },
         value
@@ -97,14 +60,13 @@ var Input = function (_React$Component) {
     }
   }]);
 
-  return Input;
-}(_react2.default.Component);
+  return TextArea;
+}(_input3.default);
 
-Input.propTypes = {
+TextArea.propTypes = {
   onChange: _react2.default.PropTypes.func,
   name: _react2.default.PropTypes.string,
-  type: _react2.default.PropTypes.string,
 
   value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number])
 };
-exports.default = Input;
+exports.default = TextArea;

@@ -1,8 +1,8 @@
 {
-  "name": "react-editable",
-  "version": "1.0.0",
+  "name": "react-editable-element",
+  "version": "1.0.1",
   "description": "[react] edit data on page",
-  "main": "build/input.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "babel src --presets es2015,stage-0,react -d build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
     "react",
     "editable"
   ],
-  "author": "alex suslov",
+  "author": "Alex Suslov",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -22,5 +22,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexsuslov/react-editable.git"
-  },
+  }
 }

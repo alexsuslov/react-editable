@@ -47,16 +47,19 @@ class Input extends React.Component {
 
   render() {
     const { name, type, value } = this.props;
-    const _input = {
+    const dx = (type === 'number') ? 16 : 8;
+    const _input = this.state.edited
+    ? {
       name, type,
       defaultValue: value,
       onKeyDown: this.handleKeyDown,
       onBlur: this.handleBlur,
       style: {
-        width: this.width,
-        height: this.height,
+        width: this.width + dx,
+        height: this.height + 8,
       }
-    };
+    }
+    : {};
     return this.state.edited
     ? (<input autoFocus {..._input} />)
     : (<span ref="span"
